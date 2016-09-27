@@ -1,1 +1,303 @@
-My Page
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Analogues Viewer</title>
+
+    <!--FOR OFFLINE
+
+    <script src="lib/jquery-1.12.0.min.js"></script>
+
+    <link rel="stylesheet" href="lib/jquery-ui.css">
+    <script src="lib/jquery-1.10.2.js"></script>
+    <script src="lib/jquery-ui.js"></script>
+
+    <script src="lib/d3-3.5.15.min.js"></script>
+    <script src="lib/crossfilter-1.3.12.min.js"></script>
+
+    <script src="lib/my_dc.beta26.js"></script>
+    <link rel="stylesheet" href="lib/dc.min.css" />
+
+    <script src="setup.js"></script>
+
+    <script src="lib/bootstrap.min.js"></script>
+    <link href="lib/bootstrap.min.css" rel="stylesheet">
+
+    <link href="sticky-footer-navbar.css" rel="stylesheet">
+
+    <link href="style.css" rel="stylesheet" type="text/css" media="all">
+
+    <script src="lib/pace.min.js"></script>
+    <link href="lib/pace-theme-loading-bar.css" rel="stylesheet" />
+    -->
+
+    <!--WPS MODE-->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    
+
+    <!--https://jqueryui.com/datepicker/#multiple-calendars-->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.15/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
+    
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.26/dc.min.js"></script>-->
+    <script src="lib/my_dc.beta26.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/2.0.0-beta.26/dc.min.css" />
+
+    <script src="setup.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+      #charts {
+        padding: 0 0;
+      }
+
+      .chart {
+        display: inline-block;
+        margin: 0 20px 20px;
+
+      }
+
+      .reset {
+        padding-left: 1em;
+        font-size: smaller;
+        color: #555;
+      }
+
+      .background.bar {
+        fill: #ccc;
+      }
+
+      .dc-chart g.row text {
+        fill: #333;
+      }
+
+      /*seasons pie chart*/
+      .dc-chart .pie-slice {
+          fill: black;
+          font-size: 10px;    
+      }
+
+      .axis path, .axis line {
+        fill: none;
+        stroke: #333;
+        shape-rendering: crispEdges;
+      }
+
+      .axis text {
+        font: 10px sans-serif;
+        fill: #333;
+      }
+
+      #chart-depth .brush rect.extent {
+        fill: #2EA3DB;
+        fill-opacity: .25;
+      }
+
+      #chart-age .brush rect.extent {
+        fill: #F5B441;
+        fill-opacity: .25;
+      }
+
+      .brush .resize path {
+        fill: #eee;
+        stroke: #666;
+      }
+
+      #map-div {
+        height: 512px;
+      }
+
+      .dc-chart-title {
+        color: #333;
+        font-weight: normal;
+        font-style: italic;
+      }
+
+      .filter {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        text-align: left;
+      }
+      .imghelp {
+        border-radius: 10px;
+      }
+
+      /* Sticky footer styles*/
+      html,
+      body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto;
+        /* Negative indent footer by its height */
+        margin: 0 auto -60px;
+        /* Pad bottom by footer height */
+        padding: 0 0 60px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #footer {
+        height: 60px;
+        background-color: #f5f5f5;
+      }
+
+
+      /* Custom page CSS
+      -------------------------------------------------- */
+      /* Not required for template or sticky footer method. */
+
+      #wrap > .container {
+        padding: 60px 15px 0;
+      }
+      .container .credit {
+        margin: 20px 0;
+      }
+
+      #footer > .container {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      code {
+        font-size: 80%;
+      }
+    </style>
+
+  </head>
+
+<body onload='init();'>
+
+  <div id="wrap">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          <a class="navbar-brand" href="index.html">Analogues Viewer</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="help.html" target="_blank">Help</a></li>
+            <li><a href="contact.html" target="_blank">Contact</a></li>
+          </ul>
+        </div>
+        <!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <!-- Begin page content -->
+    <div class="container">
+      <div class="row">
+        <div class="dc-chart col-md-12">
+          <div class="content">Calculated analogues file: <span class='value-outputfile'></span></div>
+          <div class="content">Number of analogues: <span class='value-nanalog'></span></div>
+          <div class="content">Var name: <span class='value-varname'></span></div>
+          <div class="content">Simulation source: <span class='value-simsource'></span></div>
+          <div class="content">Archive source: <span class='value-archivesource'></span></div>
+          <div class="content">bbox: <span class='value-bbox'></span></div>
+          <div class="content">Reference period: <span class='value-ref'></span></div>
+          <div>Full config file: <a href="config_ana_slp_surface_base_rms_NA_sim_1948-01-01_2016-09-23_base_1948-01-01_2016-09-23_-80.0_50.0_22.5_70.0_1_30_20.txt" target="_blank">click here</a></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="dc-chart col-md-8">
+          <div class="dc-data-count" id="chart-count">
+            <span class="filter-count"></span>analogues found out of <span class="total-count"></span> records
+          </div>
+        </div>
+      </div>
+
+      <p></p>
+
+      <div class="row">
+        <div class="dc-chart col-md-10">
+          <div class="dc-chart-title">Analysis period (manual selection, format dd/mm/yyyy)</div>
+          <a id="dateReset" class="reset" href="javascript:poiChart.filterAll();dc.redrawAll();resetChart(poiChart);" 
+             style="display: none;">reset</a>
+          <span class="reset" style="display: none;"></span>
+          <br>
+          <p>
+            Start Date (min: <span class='value-sdate'></span>) <input type="text" id="datepicker0">
+            End Date (max: <span class='value-edate'></span>) <input type="text" id="datepicker1">
+          </p>
+        </div>
+      </div>  
+
+      <div class="row">
+        <div class="dc-chart col-md-8" id="chart-poi">
+          <div class="dc-chart-title">Analysis period (chart selection)</div>
+          <a class="reset" href="javascript:poiChart.filterAll();dc.redrawAll();resetChart(poiChart);" 
+             style="display: none;">reset</a>
+          <span class="reset" style="display: none;"><span class="filter"></span></span>
+          <br>
+        </div>
+
+        <div class="dc-chart col-md-1" id="chart-seasons">
+          <div class="dc-chart-title">Season</div>
+          <a class="reset" href="javascript:seasonsChart.filterAll();dc.redrawAll();" 
+             style="display: none;">reset</a>
+          <span class="reset" style="display: none;"><span class="filter"></span></span>
+          <br>
+        </div>
+        
+      </div>    
+
+      <div class="row">
+        <div class="dc-chart col-md-4" id="chart-decade">
+          <div class="dc-chart-title">Archive decade</div>
+          <a class="reset" href="javascript:decadeChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+          <br>
+        </div>
+
+        <div class="dc-chart col-md-4" id="chart-corr">
+          <div class="dc-chart-title">Correlation</div>
+          <a class="reset" href="javascript:corrChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+          <br>
+        </div>
+
+        <div class="dc-chart col-md-4" id="chart-dis">
+          <div class="dc-chart-title">Distance</div>
+          <a class="reset" href="javascript:disChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+          <br>
+        </div>
+
+      </div>
+
+
+
+    </div><!-- /.container -->
+
+  </div>
+
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted credit">Created by <a target="_blank" href="http://www.lsce.ipsl.fr/en"><span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span></a>&nbsp;
+        <a target="_blank" href="http://www.lsce.ipsl.fr/en"><img src="LSCE_Icon.png" title="Climate and Environment Sciences Laboratory" /></a> and hosted by <a target="_blank" href="http://www.ipsl.fr/en"><span title="Institut Pierre Simon Laplace" style="font-weight:bold;">IPSL</span></a>&nbsp;
+        <a target="_blank" href="http://www.ipsl.fr/en"><img src="IPSL_logo.png" title="Institut Pierre Simon Laplace" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Version 0.1 - 2016/02/15</p>
+    </div>
+    <!-- /.container -->
+  </div>
+
+</body>
+
+</html>
