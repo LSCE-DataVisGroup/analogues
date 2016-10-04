@@ -504,6 +504,11 @@ function initCrossfilter() {
     .title(function(d) {
       return seasons[d.key] +": "+ d.value +" analogues";
     });
+
+    //Show season string instead of number in reset display
+    seasonsChart.filterPrinter(function(filters) { 
+      return filters.map(function(key) { return seasons[key]; }).join(', '); 
+    })
    
   //-----------------------------------
   decadeChart
