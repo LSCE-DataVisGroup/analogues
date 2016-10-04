@@ -34,9 +34,6 @@ var init_date0, init_date1;
 //====================================================================
 function init() {
   //read config file
-  //d3.text("config_test.txt", function(text) {
-  //config_ana_slp_surface__rms_NA_sim_1948-01-01_2016-09-19_base_1948-01-01_2016-09-19_-80.0_50.0_22.5_70.0_1_30_20.txt
-  //d3.text("config_test_11anlgs.txt", function(text) {
   d3.text("config_ana_slp_surface_base_rms_NA_sim_1948-01-01_2016-09-23_base_1948-01-01_2016-09-23_-80.0_50.0_22.5_70.0_1_30_20.txt", function(text) {    
     text_array = d3.csv.parseRows(text);
 
@@ -76,25 +73,11 @@ function init() {
     $(".content .value-simsource").html(simsource);
     $(".content .value-archivesource").html(archivesource);
     $(".content .value-bbox").html(bbox);
-    $(".value-ref").html(startref + " - " + endref);
+    $(".value-ref").html(startref + " &ndash; " + endref);
     
   });
 
-  //http://localhost:8090/wpsoutputs/flyingpigeon/analogs-12f189be-79a7-11e6-b7f7-e7ff4fd8b248.txt
-  //config_ana_slp_surface__rms_NA_sim_1948-01-01_2016-09-19_base_1948-01-01_2016-09-19_-80.0_50.0_22.5_70.0_1_30_20.txt
-  //d3.tsv("test_11anlgs.json", function(data) {
-  d3.tsv("ana_slp_surface_base_rms_NA_sim_1948-01-01_2016-09-23_base_1948-01-01_2016-09-23_-80.0_50.0_22.5_70.0_1_30_20.json", function(data) {  
-
-  //http://birdhouse-lsce.extra.cea.fr:8090/wpsoutputs/flyingpigeon/analogs-73cd782c-74f4-11e6-bf5f-f73f2a3d7e35.txt
-  //d3.tsv("test_gt1yr_birdhouse.json", function(data) {
-  //d3.tsv("test_gt1yr_birdhouse_03Jan2013.json", function(data) {
-
-  //d3.tsv("test2_edit.json", function(data) {
-  //d3.tsv("test_gt1yr.json", function(data) {
-  //d3.tsv("modified-analogfileyODtII.tsv", function(data) {
-  //d3.tsv("test_span2months.json", function(data) {
-  //d3.tsv("test_span2months_edit.json", function(data) {
-    
+  d3.tsv("ana_slp_surface_base_rms_NA_sim_1948-01-01_2016-09-23_base_1948-01-01_2016-09-23_-80.0_50.0_22.5_70.0_1_30_20.json", function(data) {
     var firstDate = data[0].dateRef + dataHour; //set time from midnight to noon
     var lastDate = data[Object.keys(data).length - 1].dateRef + dataHour;
     minDate = dateFormat.parse(firstDate);
@@ -321,8 +304,12 @@ function initCrossfilter() {
   var currentGranularity = 'month';
   var saveLevel = 0;
   var dateFormatForZoom = d3.time.format('%Y%m%d');
-  var init_domain0 = dateFormatForZoom.parse("21000101"), init_domain1 = dateFormatForZoom.parse("2100101");
+  var init_domain0 = dateFormatForZoom.parse("21000101"), 
+      init_domain1 = dateFormatForZoom.parse("2100101");
   var resolnLimit = 260; //365; //Determines cutoff for month or day resoln (in days)
+
+  $(".content .value-resolnLimit").html("For periods &ge; " + resolnLimit + 
+    " days, bars show monthly sum of analogues. Otherwise, the bars show the daily analogue count.");
 
   //Determine date resolution of poiChart
   //http://stackoverflow.com/questions/23953019/dc-js-group-top5-not-working-in-chart
