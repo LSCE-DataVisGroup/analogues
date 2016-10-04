@@ -4,6 +4,11 @@
   padding: 0 0;
 }
 
+#div-config {
+  font-weight: normal;
+  color: #8a817c;
+}
+
 .chart {
   display: inline-block;
   margin: 0 20px 20px;
@@ -47,8 +52,8 @@
 }
 
 .dc-chart-title {
-  color: #333;
-  font-weight: normal;
+  color: #5b5b5b;
+  font-weight: bold;
   font-style: italic;
 }
 
